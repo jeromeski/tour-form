@@ -5,7 +5,8 @@ export default function StepTwo({
   setImageFiles,
   handleSubmit,
   values,
-  setValues
+  setValues,
+  handlePrev
 }) {
   const [programTitle, setProgramTitle] = useState();
   const [programDescription, setProgramDescription] = useState();
@@ -46,6 +47,7 @@ export default function StepTwo({
         <button onClick={handleProgram}>Add Program</button>
       </div>
       <button onClick={handleSubmit}>Submit</button>
+      <button onClick={handlePrev}>Back</button>
     </Fragment>
   );
 }

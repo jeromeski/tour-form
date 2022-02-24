@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useLogger } from "react-use";
 import PackageFormFlow from "./components/PackageFormFlow";
 import StepOne from "./components/StepOne";
 import StepTwo from "./components/StepTwo";
@@ -19,6 +20,7 @@ const initialState = {
 };
 
 export default function App() {
+  useLogger("App => ");
   const [values, setValues] = useState(initialState);
   const [imageFiles, setImageFiles] = useState(null);
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -60,7 +62,7 @@ export default function App() {
     return () => {};
   };
 
-  console.log(values);
+  console.log(currentIndex);
 
   useEffect(() => {
     if (imageFiles) {
@@ -75,6 +77,13 @@ export default function App() {
     }
   };
 
+  const handlePrev = () => {
+    if (currentIndex <= 1) {
+      setCurrentIndex(currentIndex - 1);
+      return;
+    }
+  };
+
   return (
     <PackageFormFlow currentIndex={currentIndex} handleSubmit={handleSubmit}>
       <StepOne handleNext={handleNext} handleChange={handleChange} />
@@ -82,6 +91,7 @@ export default function App() {
         handleChange={handleChange}
         setImageFiles={setImageFiles}
         setValues={setValues}
+        handlePrev={handlePrev}
       />
     </PackageFormFlow>
   );
