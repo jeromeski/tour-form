@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
-import DragDrop from "./components/DragNDrop";
+import PackageFormFlow from "./components/PackageFormFlow";
+import StepOne from "./components/StepOne";
+import StepTwo from "./components/StepTwo";
 import "./styles.css";
 
 const initialState = {
@@ -12,12 +14,14 @@ const initialState = {
   salesPrice: "",
   regularPrice: "",
   discount: "",
-  images: []
+  images: [],
+  programs: []
 };
 
 export default function App() {
   const [values, setValues] = useState(initialState);
   const [imageFiles, setImageFiles] = useState(null);
+  const [currentIndex, setCurrentIndex] = useState(0);
 
   const {
     title,
@@ -60,111 +64,17 @@ export default function App() {
     }
   }, [imageFiles]);
 
-  return (
-    <form onSubmit={handleSubmit}>
-      <div className="form-group">
-        <label className="label d-block">Title</label>
-        <input
-          className="input d-block"
-          type="text"
-          name="title"
-          placeholder="Enter Title"
-          onChange={handleChange}
-        />
-      </div>
-      <div className="form-group">
-        <label className="label d-block">Description</label>
-        <textarea
-          className="text-area"
-          type=""
-          name="description"
-          placeholder="Description"
-          onChange={handleChange}
-        />
-      </div>
-      <div className="form-group">
-        <label className="label d-block">Group Size</label>
-        <input
-          className="input"
-          type="number"
-          name="maxCount"
-          placeholder="No of Pax"
-          onChange={handleChange}
-          onKeyDown={handleChange}
-        />
-      </div>
-      <div className="form-group">
-        <label className="label d-block">Trip Duration</label>
-        <input
-          className="input"
-          type="number"
-          name="days"
-          placeholder="Days"
-          onChange={handleChange}
-          onKeyDown={handleChange}
-        />
-        <input
-          className="input"
-          type="number"
-          name="nights"
-          placeholder="Nights"
-          onChange={handleChange}
-          onKeyDown={handleChange}
-        />
-      </div>
-      <div className="form-group">
-        <label className="label d-block">Category</label>
-        <select
-          defaultValue="Choose One"
-          name="category"
-          onChange={handleChange}
-        >
-          <option value="Choose One" disabled="disabled">
-            Choose One
-          </option>
-          <option value="Adult">Adult</option>
-          <option value="child">Child</option>
-          <option value="couple">Couple</option>
-        </select>
-      </div>
-      <div className="form-group">
-        <label className="label d-block">Sales Price</label>
-        <input
-          className="input"
-          type="number"
-          name="salesPrice"
-          placeholder="Sales Price"
-          onChange={handleChange}
-          onKeyDown={handleChange}
-        />
-      </div>
-      <div className="form-group">
-        <label className="label d-block">Regular Price</label>
-        <input
-          className="input"
-          type="number"
-          name="regularPrice"
-          placeholder="Regular Price"
-          onChange={handleChange}
-          onKeyDown={handleChange}
-        />
-      </div>
-      <div className="form-group">
-        <label className="label d-block">Discount</label>
-        <input
-          className="input"
-          type="number"
-          name="discount"
-          placeholder="Discount"
-          onChange={handleChange}
-          onKeyDown={handleChange}
-        />
-      </div>
-      <div className="form-group">
-        <DragDrop setImageFiles={setImageFiles} />
-      </div>
+  const handleNext = () => {
+    if (currentIndex < 1) {
+      setCurrentIndex(currentIndex + 1);
+      return;
+    }
+  };
 
-      <button>Submit</button>
-    </form>
+  return (
+    <PackageFormFlow currentIndex={currentIndex} handleSubmit={handleSubmit}>
+      <StepOne handleNext={handleNext} handleChange={handleChange} />
+      <StepTwo handleChange={handleChange} setImageFiles={setImageFiles} />
+    </PackageFormFlow>
   );
 }
