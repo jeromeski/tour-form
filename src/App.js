@@ -33,7 +33,8 @@ export default function App() {
     salesPrice,
     regularPrice,
     discount,
-    images
+    images,
+    programs
   } = values;
 
   const handleChange = (e) => {
@@ -53,10 +54,13 @@ export default function App() {
     packageOffer.append("regularPrice", regularPrice);
     packageOffer.append("discount", discount);
     packageOffer.append("images", images);
+    packageOffer.append("programs", programs);
 
     console.log([...packageOffer][9][1]);
     return () => {};
   };
+
+  console.log(values);
 
   useEffect(() => {
     if (imageFiles) {
@@ -74,7 +78,11 @@ export default function App() {
   return (
     <PackageFormFlow currentIndex={currentIndex} handleSubmit={handleSubmit}>
       <StepOne handleNext={handleNext} handleChange={handleChange} />
-      <StepTwo handleChange={handleChange} setImageFiles={setImageFiles} />
+      <StepTwo
+        handleChange={handleChange}
+        setImageFiles={setImageFiles}
+        setValues={setValues}
+      />
     </PackageFormFlow>
   );
 }

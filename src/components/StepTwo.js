@@ -7,10 +7,17 @@ export default function StepTwo({
   values,
   setValues
 }) {
-  const [programs, setPrograms] = useState([]);
+  const [programTitle, setProgramTitle] = useState();
+  const [programDescription, setProgramDescription] = useState();
 
-  const handleProgram = (e) => {
-    setPrograms();
+  const handleProgram = () => {
+    // setValues(({programs}) => ({...values, programs: programs.push({programTitle, programDescription})}))
+
+    const programsData = { programTitle, programDescription };
+    setValues(({ programs }) => ({
+      ...values,
+      programs: [...programs, programsData]
+    }));
   };
 
   return (
@@ -25,7 +32,7 @@ export default function StepTwo({
           type="text"
           name="programTitle"
           placeholder="Enter Title"
-          onChange={handleProgram}
+          onChange={(e) => setProgramTitle(e.target.value)}
         />
       </div>
       <div className="form-group">
@@ -34,15 +41,9 @@ export default function StepTwo({
           className="text-area"
           name="programDescription"
           placeholder="Description"
-          onChange={handleProgram}
+          onChange={(e) => setProgramDescription(e.target.value)}
         />
-        <button
-          onClick={() =>
-            setValues({ ...values, programs: [...programs, programs] })
-          }
-        >
-          Add Program
-        </button>
+        <button onClick={handleProgram}>Add Program</button>
       </div>
       <button onClick={handleSubmit}>Submit</button>
     </Fragment>
