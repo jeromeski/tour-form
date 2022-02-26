@@ -1,53 +1,87 @@
-import { Fragment, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
+import { useLogger } from "react-use";
 import DragDrop from "./DragNDrop";
 
-export default function StepTwo({
-  setImageFiles,
-  handleSubmit,
-  values,
-  setValues,
-  handlePrev
-}) {
-  const [programTitle, setProgramTitle] = useState();
-  const [programDescription, setProgramDescription] = useState();
+let dataCache = null;
+let initialState = {
+  images: [],
+  programs: []
+};
 
-  const handleProgram = () => {
-    // setValues(({programs}) => ({...values, programs: programs.push({programTitle, programDescription})}))
+export default function StepTwo({ setValues, handlePrev, handleNext }) {
+  useLogger("StepTwo -->");
+  // Ilagay sa iisang programState
+  const [programs, setPrograms] = useState({
+    programTitle: "",
+    programDescription: ""
+  });
 
-    const programsData = { programTitle, programDescription };
-    setValues(({ programs }) => ({
-      ...values,
-      programs: [...programs, programsData]
-    }));
+  const [data, setData] = useState(dataCache || initialState);
+
+  const handleChange = (e) => {
+    setPrograms({ ...programs, [e.target.name]: e.target.value });
   };
+
+  const resetPrograms = () => {
+    setPrograms({
+      programTitle: "",
+      programDescription: ""
+    });
+  };
+
+  const handleAddProgram = () => {
+    setData((prev) => ({ ...data, programs: [...prev.programs, programs] }));
+    resetPrograms();
+  };
+
+  const handleAddImages = (files) => {
+    setData((prev) => ({ ...data, images: [...prev.images, files] }));
+  };
+
+  console.log("Programs -->", programs, "Data -->", data);
+  console.log("StepTwo DATA -->", data);
+
+  useEffect(() => {
+    dataCache = data;
+  });
 
   return (
     <Fragment>
       <div className="form-group">
-        <DragDrop setImageFiles={setImageFiles} />
+        <DragDrop handleAddImages={handleAddImages} />
       </div>
       <div className="form-group">
-        <label className="label d-block">Program Title</label>
+        <label className="label d-block">Program</label>
         <input
           className="input d-block"
           type="text"
           name="programTitle"
+          value={programs.programTitle}
           placeholder="Enter Title"
-          onChange={(e) => setProgramTitle(e.target.value)}
+          onChange={handleChange}
         />
-      </div>
-      <div className="form-group">
-        <label className="label d-block">Program Description</label>
         <textarea
           className="text-area"
           name="programDescription"
           placeholder="Description"
-          onChange={(e) => setProgramDescription(e.target.value)}
+          value={programs.programDescription}
+          onChange={handleChange}
         />
-        <button onClick={handleProgram}>Add Program</button>
+        <button onClick={handleAddProgram}>Add Program</button>
       </div>
-      <button onClick={handleSubmit}>Submit</button>
-      <button onClick={handlePrev}>Back</button>
+      <div className="mt-5">
+        <button onClick={handlePrev}>Back</button>
+        <button
+          onClick={() => {
+            if (data === null) {
+              console.log(data);
+            }
+            handleNext(data);
+          }}
+        >
+          HandleNext
+        </button>
+      </div>
     </Fragment>
   );
 }

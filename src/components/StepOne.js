@@ -1,6 +1,33 @@
-import { Fragment } from "react";
+import { Fragment, useEffect, useState } from "react";
+import { useLogger } from "react-use";
 
-export default function StepOne({ handleChange, handleNext }) {
+let dataState = null;
+const initialState = {
+  title: "",
+  description: "",
+  maxCount: "",
+  days: "",
+  nights: "",
+  category: "",
+  salesPrice: "",
+  regularPrice: "",
+  discount: ""
+};
+
+export default function StepOne({ handleNext }) {
+  useLogger("StepOne -->");
+  const [data, setData] = useState({ ...(dataState || initialState) });
+
+  const handleChange = (e) => {
+    setData({ ...data, [e.target.name]: e.target.value });
+  };
+
+  useEffect(() => {
+    dataState = data;
+  });
+
+  console.log("StepOne DATA -->", data);
+
   return (
     <Fragment>
       <div className="form-group">
@@ -101,7 +128,7 @@ export default function StepOne({ handleChange, handleNext }) {
           onKeyDown={handleChange}
         />
       </div>
-      <button onClick={handleNext}>Next</button>
+      <button onClick={() => handleNext(data)}>Next</button>
     </Fragment>
   );
 }
