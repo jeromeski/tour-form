@@ -23,7 +23,7 @@ export default function LocationInput({ setData, data }) {
   return (
     <Fragment>
       <div className="form-group">
-        <div className="form-group-item">
+        <div className="form-group-item mb-1">
           <span>You can get your HTML code here. </span>
           <button
             onClick={() => {

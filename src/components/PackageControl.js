@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { getCategories } from "../api/get-categories";
 import PackageFormFlow from "./PackageFormFlow";
 import StepOne from "./StepOne";
 import StepThree from "./StepThree";
@@ -38,6 +39,8 @@ export default function PackageControl() {
     programs,
     location
   } = values;
+
+  console.log(getCategories());
 
   const handleSubmit = (e) => {
     e.preventDefault();
