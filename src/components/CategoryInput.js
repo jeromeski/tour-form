@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { Fragment, useMemo, useState } from "react";
 import {
   Combobox,
   ComboboxInput,
@@ -12,53 +12,49 @@ import { matchSorter } from "match-sorter";
 // import { getCategories } from "../api/get-categories";
 import categories from "../data/categories";
 
-export default function CategoryInput(setData) {
+export default function CategoryInput({ setData, data }) {
   const [term, setTerm] = useState("");
-  // const [categories, setCategories] = useState("");
-
   const handleChange = (event) => setTerm(event.target.value);
 
   const results = useCategoryMatch(term, categories());
 
-  // useEffect(() => {
-  //   try {
-  //     (async () =>
-  //       await getCategories().then(({ data }) => {
-  //         setCategories(data);
-  //       }))();
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // }, []);
-
-  // console.log(categories);
-
   console.log(term);
 
-  const handleSelect = (item) => {};
+  const handleSelect = (item) => {
+    setData((prev) => ({
+      ...data,
+      categories: [...prev.categories, item]
+    }));
+    setTerm("");
+  };
 
   return (
-    <Combobox aria-label="Categories" onSelect={(item) => handleSelect(item)}>
-      <ComboboxInput
-        className="categories-search-input"
-        onChange={handleChange}
-      />
-      {results && (
-        <ComboboxPopover className="shadow-popup">
-          {results.length > 0 ? (
-            <ComboboxList>
-              {results.slice(0, 10).map((result, index) => (
-                <ComboboxOption key={index} value={`${result.name}`} />
-              ))}
-            </ComboboxList>
-          ) : (
-            <span style={{ display: "block", margin: 8 }}>
-              No results found
-            </span>
-          )}
-        </ComboboxPopover>
+    <Fragment>
+      <Combobox aria-label="Categories" onSelect={(item) => handleSelect(item)}>
+        <ComboboxInput
+          className="categories-search-input"
+          onChange={handleChange}
+        />
+        {results && (
+          <ComboboxPopover className="shadow-popup">
+            {results.length > 0 ? (
+              <ComboboxList>
+                {results.slice(0, 10).map((result, index) => (
+                  <ComboboxOption key={index} value={`${result.name}`} />
+                ))}
+              </ComboboxList>
+            ) : (
+              <span style={{ display: "block", margin: 8 }}>
+                No results found
+              </span>
+            )}
+          </ComboboxPopover>
+        )}
+      </Combobox>
+      {data && data.categories && (
+        <pre>{JSON.stringify(data.categories, null, 4)}</pre>
       )}
-    </Combobox>
+    </Fragment>
   );
 }
 

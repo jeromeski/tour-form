@@ -17,7 +17,8 @@ const initialState = {
   discount: "",
   images: [],
   programs: [],
-  location: ""
+  location: "",
+  categories: []
 };
 
 export default function PackageControl() {
@@ -37,7 +38,8 @@ export default function PackageControl() {
     discount,
     images,
     programs,
-    location
+    location,
+    categories
   } = values;
 
   console.log(getCategories());
@@ -57,6 +59,7 @@ export default function PackageControl() {
     packageOffer.append("images", images);
     packageOffer.append("programs", programs);
     packageOffer.append("location", location);
+    packageOffer.append("categories", categories);
 
     console.log([...packageOffer]);
   };
