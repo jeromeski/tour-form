@@ -42,58 +42,76 @@ export default function StepTwo({ setValues, handlePrev, handleNext }) {
     setData((prev) => ({ ...data, images: { ...prev.images, files } }));
   };
 
-  useEffect(() => {
-    dataCache = data;
-  });
+  const handleDeleteCategory = (e, category) => {
+		console.log(e.target, category);
+		console.log(data.categories);
+		setData({
+			...data,
+			categories: data.categories.filter((item) => item !== category)
+		});
+	};
 
-  // console.log("Programs -->", programs);
-  // console.log("StepTwo DATA -->", data);
+	useEffect(() => {
+		dataCache = data;
+	});
 
-  return (
-    <Fragment>
-      <div className="form-group mb-3">
-        <DragDrop handleAddImages={handleAddImages} />
-      </div>
-      <div className="form-group mb-4">
-        <label className="label d-block">Program</label>
-        <input
-          className="input d-block"
-          type="text"
-          name="programTitle"
-          value={programs.programTitle}
-          placeholder="Enter Title"
-          onChange={handleChange}
-        />
-        <textarea
-          className="text-area"
-          name="programDescription"
-          placeholder="Description"
-          value={programs.programDescription}
-          onChange={handleChange}
-        />
-        <button onClick={handleAddProgram}>Add Program</button>
-      </div>
-      <div className="form-group mb-4">
-        <LocationInput setData={setData} data={data} />
-      </div>
-      <div className="form-group">
-        <label>Add Category</label>
-        <CategoryInput setData={setData} />
-      </div>
+	// console.log("Programs -->", programs);
+	console.log("StepTwo DATA -->", data);
 
-      <div className="mt-5">
-        <button onClick={handlePrev}>Back</button>
-        <button
-          onClick={() => {
-            if (data === null) {
-              console.log(data);
-            }
-            handleNext(data);
-          }}
-        >
-          HandleNext
-        </button>
-      </div>
-    </Fragment>
-  );
+	return (
+		<Fragment>
+			<div className="form-group mb-3">
+				<DragDrop handleAddImages={handleAddImages} />
+			</div>
+			<div className="form-group mb-4">
+				<label className="label d-block">Program</label>
+				<input
+					className="input d-block"
+					type="text"
+					name="programTitle"
+					value={programs.programTitle}
+					placeholder="Enter Title"
+					onChange={handleChange}
+				/>
+				<textarea
+					className="text-area"
+					name="programDescription"
+					placeholder="Description"
+					value={programs.programDescription}
+					onChange={handleChange}
+				/>
+				<button onClick={handleAddProgram}>Add Program</button>
+			</div>
+			<div className="form-group mb-4">
+				<LocationInput setData={setData} data={data} />
+			</div>
+			<div className="form-group">
+				<label>Add Category</label>
+				<CategoryInput setData={setData} />
+			</div>
+			{data &&
+				data.categories &&
+				data.categories.map((category, idx) => {
+					return (
+						<Fragment>
+							<span key={`${category[idx]}`}>{category}</span>
+							<button onClick={(e) => handleDeleteCategory(e, category)}>Remove</button>
+						</Fragment>
+					);
+				})}
+
+			<div className="mt-5">
+				<button onClick={handlePrev}>Back</button>
+				<button
+					onClick={() => {
+						if (data === null) {
+							console.log(data);
+						}
+						handleNext(data);
+					}}>
+					HandleNext
+				</button>
+			</div>
+		</Fragment>
+	);
 }
