@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { useLogger } from "react-use";
 import PackageFormFlow from "./PackageFormFlow";
 import StepOne from "./StepOne";
 import StepThree from "./StepThree";
@@ -16,7 +15,8 @@ const initialState = {
   regularPrice: "",
   discount: "",
   images: [],
-  programs: []
+  programs: [],
+  location: ""
 };
 
 export default function PackageControl() {
@@ -35,7 +35,8 @@ export default function PackageControl() {
     regularPrice,
     discount,
     images,
-    programs
+    programs,
+    location
   } = values;
 
   const handleSubmit = (e) => {
@@ -52,6 +53,7 @@ export default function PackageControl() {
     packageOffer.append("discount", discount);
     packageOffer.append("images", images);
     packageOffer.append("programs", programs);
+    packageOffer.append("location", location);
 
     console.log([...packageOffer]);
   };

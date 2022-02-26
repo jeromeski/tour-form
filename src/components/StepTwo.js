@@ -1,11 +1,13 @@
 import { Fragment, useEffect, useState } from "react";
 import { useLogger } from "react-use";
 import DragDrop from "./DragNDrop";
+import LocationInput from "./LocationInput";
 
 let dataCache = null;
 let initialState = {
   images: [],
-  programs: []
+  programs: [],
+  location: ""
 };
 
 export default function StepTwo({ setValues, handlePrev, handleNext }) {
@@ -35,22 +37,22 @@ export default function StepTwo({ setValues, handlePrev, handleNext }) {
   };
 
   const handleAddImages = (files) => {
-    setData((prev) => ({ ...data, images: [...prev.images, files] }));
+    setData((prev) => ({ ...data, images: { ...prev.images, files } }));
   };
-
-  console.log("Programs -->", programs, "Data -->", data);
-  console.log("StepTwo DATA -->", data);
 
   useEffect(() => {
     dataCache = data;
   });
 
+  console.log("Programs -->", programs);
+  console.log("StepTwo DATA -->", data);
+
   return (
     <Fragment>
-      <div className="form-group">
+      <div className="form-group mb-3">
         <DragDrop handleAddImages={handleAddImages} />
       </div>
-      <div className="form-group">
+      <div className="form-group mb-3">
         <label className="label d-block">Program</label>
         <input
           className="input d-block"
@@ -69,6 +71,7 @@ export default function StepTwo({ setValues, handlePrev, handleNext }) {
         />
         <button onClick={handleAddProgram}>Add Program</button>
       </div>
+      <LocationInput setData={setData} data={data} />
       <div className="mt-5">
         <button onClick={handlePrev}>Back</button>
         <button
