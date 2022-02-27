@@ -8,9 +8,9 @@ import "./styles.css";
 
 export default function App() {
   return (
-    <Fragment>
-      <NewPackage />
-      <ToastContainer />
-    </Fragment>
-  );
+		<div className="bootstrap-wrapper">
+			<NewPackage />
+			<ToastContainer />
+		</div>
+	);
 }

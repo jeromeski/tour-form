@@ -1,15 +1,45 @@
-import React from "react";
+import React, { Fragment } from "react";
 
-const TextArea = React.forwardRef(({ errorMessage, labelTitle, type, name, ...rest, encased = false }, ref) => {
-	if (encased) return <label htmlFor={name}>{labelTitle}
-    <textarea type={type} name={name} ref={ref} {...rest}/>;
-    {errorMessage && <span>{errorMessage}</span>}
-  </label>
-  return  <Fragment>
-    <label htmlFor={name}>{labelTitle}</label>
-    <textarea type={type} name={name} ref={ref} {...rest} />
-    {errorMessage && <span>{errorMessage}</span>}
-  </Fragment>
-});
+const TextArea = ({
+	errorMessage,
+	labelTitle,
+	name,
+	handleChange,
+	encased = false,
+	labelClassName,
+	inputClassName,
+	placeholderNote,
+	...rest
+}) => {
+	if (encased)
+		return (
+			<label className={labelClassName} htmlFor={name}>
+				{labelTitle}
+				<textarea
+					className={inputClassName}
+					name={name}
+					onChange={handleChange}
+					placeholder={placeholderNote}
+					{...rest}
+				/>
+				;{errorMessage && <span>{errorMessage}</span>}
+			</label>
+		);
+	return (
+		<Fragment>
+			<label className={labelClassName} htmlFor={name}>
+				{labelTitle}
+			</label>
+			<textarea
+				className={inputClassName}
+				name={name}
+				onChange={handleChange}
+				placeholder={placeholderNote}
+				{...rest}
+			/>
+			{errorMessage && <span>{errorMessage}</span>}
+		</Fragment>
+	);
+};
 
 export default TextArea;

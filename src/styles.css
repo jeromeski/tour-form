@@ -4258,3 +4258,25 @@ a.text-dark:hover {
 .full-page-height {
   height: 100vh;
 }
+
+body {
+  font-family: Roboto, sans-serif;
+}
+
+.button {
+    border-radius: 2px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    padding: 6px 12px;
+    margin-right: 1rem;
+    border-radius: 4px;
+}
+
+.button:hover {
+  filter: brightness(.85)
+}
+
+.button:active {
+  background: #d8dade;
+  border-color: #d8dade;
+}
