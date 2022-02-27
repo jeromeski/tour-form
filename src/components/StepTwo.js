@@ -1,53 +1,53 @@
 import { Fragment, useEffect, useState } from "react";
 import { useLogger } from "react-use";
-import CategoryInput from "./CategoryInput";
+import KeywordInput from "./KeywordInput";
 import DragDrop from "./DragNDrop";
 import LocationInput from "./LocationInput";
+import { DeleteOutlined } from "@ant-design/icons";
 
 let dataCache = null;
 let initialState = {
-  images: [],
-  programs: [],
-  location: "",
-  categories: []
+	images: [],
+	programs: [],
+	location: "",
+	keywords: [],
+	categories: []
 };
 
 export default function StepTwo({ setValues, handlePrev, handleNext }) {
-  useLogger("StepTwo -->");
-  // Ilagay sa iisang programState
-  const [programs, setPrograms] = useState({
-    programTitle: "",
-    programDescription: ""
-  });
+	useLogger("StepTwo -->");
+	// Ilagay sa iisang programState
+	const [programs, setPrograms] = useState({
+		programTitle: "",
+		programDescription: ""
+	});
 
-  const [data, setData] = useState(dataCache || initialState);
+	const [data, setData] = useState(dataCache || initialState);
 
-  const handleChange = (e) => {
-    setPrograms({ ...programs, [e.target.name]: e.target.value });
-  };
+	const handleChange = (e) => {
+		setPrograms({ ...programs, [e.target.name]: e.target.value });
+	};
 
-  const resetPrograms = () => {
-    setPrograms({
-      programTitle: "",
-      programDescription: ""
-    });
-  };
+	const resetPrograms = () => {
+		setPrograms({
+			programTitle: "",
+			programDescription: ""
+		});
+	};
 
-  const handleAddProgram = () => {
-    setData((prev) => ({ ...data, programs: [...prev.programs, programs] }));
-    resetPrograms();
-  };
+	const handleAddProgram = () => {
+		setData((prev) => ({ ...data, programs: [...prev.programs, programs] }));
+		resetPrograms();
+	};
 
-  const handleAddImages = (files) => {
-    setData((prev) => ({ ...data, images: { ...prev.images, files } }));
-  };
+	const handleAddImages = (files) => {
+		setData((prev) => ({ ...data, images: { ...prev.images, files } }));
+	};
 
-  const handleDeleteCategory = (e, category) => {
-		console.log(e.target, category);
-		console.log(data.categories);
+	const handleDeleteKeyword = (e, keyword) => {
 		setData({
 			...data,
-			categories: data.categories.filter((item) => item !== category)
+			keywords: data.keywords.filter((item) => item !== keyword)
 		});
 	};
 
@@ -86,17 +86,19 @@ export default function StepTwo({ setValues, handlePrev, handleNext }) {
 				<LocationInput setData={setData} data={data} />
 			</div>
 			<div className="form-group">
-				<label>Add Category</label>
-				<CategoryInput setData={setData} />
+				<label>Add Keywords</label>
+				<KeywordInput setData={setData} />
 			</div>
 			{data &&
-				data.categories &&
-				data.categories.map((category, idx) => {
+				data.keywords &&
+				data.keywords.map((keyword, idx) => {
 					return (
-						<Fragment>
-							<span key={`${category[idx]}`}>{category}</span>
-							<button onClick={(e) => handleDeleteCategory(e, category)}>Remove</button>
-						</Fragment>
+						<div>
+							<span key={`${keyword[idx]}:${keyword}`}>{keyword}</span>
+							<button onClick={(e) => handleDeleteKeyword(e, keyword)}>
+								<DeleteOutlined />
+							</button>
+						</div>
 					);
 				})}
 
