@@ -1,14 +1,14 @@
 import axios from "axios";
 import MockAdapter from "axios-mock-adapter";
-import categoriesJson from "../data/keywords";
+import categoriesJson from "../data/categories.json";
 
-const { categories: categories } = categoriesJson;
+const { categories } = categoriesJson;
 
 const mock = new MockAdapter(axios);
 
 mock.onGet("/categories").reply(200, { categories });
 
-export const getKeywords = async () => {
+export const getCategories = async () => {
 	try {
 		const res = await axios.get("/categories");
 		return res;

@@ -4,6 +4,7 @@ import KeywordInput from "./KeywordInput";
 import DragDrop from "./DragNDrop";
 import LocationInput from "./LocationInput";
 import { DeleteOutlined } from "@ant-design/icons";
+import NewCategory from "./NewCategory";
 
 let dataCache = null;
 let initialState = {
@@ -101,7 +102,9 @@ export default function StepTwo({ setValues, handlePrev, handleNext }) {
 						</div>
 					);
 				})}
-
+			<div className="form-group">
+				<NewCategory data={data} setData={setData} />
+			</div>
 			<div className="mt-5">
 				<button onClick={handlePrev}>Back</button>
 				<button
