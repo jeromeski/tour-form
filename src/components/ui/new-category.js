@@ -3,12 +3,11 @@ import { getCategories } from "api/get-categories";
 import CategoryInput from "components/ui/category-input";
 // import "@reach/checkbox/styles.css";
 
-function NewCategory({ data, setData }) {
+function NewCategory({ data, setData, labelClassName }) {
 	const [categories, setCategories] = useState();
 	const [categoriesChecked, setCategoriesChecked] = useState([]);
 	const handleChange = (e) => {
 		const cboxName = e.target.name;
-		// console.log(cboxName);
 		if (e.target.checked) {
 			setCategoriesChecked([...categoriesChecked, cboxName]);
 		} else if (!e.target.checked) {
@@ -19,7 +18,9 @@ function NewCategory({ data, setData }) {
 
 	useEffect(() => {
 		getCategories()
-			.then(({ data }) => setCategories(data.categories))
+			.then(({ data }) => {
+				setCategories(data.categories);
+			})
 			.catch((error) => console.log(error));
 	}, []);
 
@@ -29,7 +30,7 @@ function NewCategory({ data, setData }) {
 
 	return (
 		<Fragment>
-			<h3 className="mb-0">Category</h3>
+			<label className={labelClassName}>Category</label>
 			{categories ? (
 				categories.map((category) => (
 					<div key={`${category.name}:${category.id}`}>

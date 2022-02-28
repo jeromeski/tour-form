@@ -16,7 +16,7 @@ const initialState = {
 	discount: ""
 };
 
-export default function StepOne({ handleNext }) {
+export default function StepOne({ handleNext, values }) {
 	useLogger("StepOne -->");
 	const [data, setData] = useState({ ...(dataState || initialState) });
 
@@ -32,7 +32,7 @@ export default function StepOne({ handleNext }) {
 		<Fragment>
 			<div className="container p-5">
 				<div className="row">
-					<div className="col-md-6 col-lg-6 col-xl-6">
+					<div className="col-md-6">
 						<fieldset className="p-3">
 							<div className="form-group mb-2">
 								<Input
@@ -152,8 +152,15 @@ export default function StepOne({ handleNext }) {
 							</button>
 						</fieldset>
 					</div>
-					<div className="col-md-6 col-lg-6 col-xl-6">
-						<pre>{JSON.stringify(data, null, 4)}</pre>
+					<div className="col-md-6">
+						<div className="row">
+							<div className="col-md-6">
+								<pre>{JSON.stringify(data, null, 4)}</pre>
+							</div>
+							<div className="col-md-6">
+								<pre>{JSON.stringify(values, null, 4)}</pre>
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>

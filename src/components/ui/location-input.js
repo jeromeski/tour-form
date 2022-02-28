@@ -1,7 +1,7 @@
 import { Fragment, useEffect, useState } from "react";
 import useHTMLtoReact from "hooks/use-html-react";
 
-export default function LocationInput({ setData, data }) {
+export default function LocationInput({ setData, data, inputClassName }) {
 	const [tag, setTag] = useState("");
 	const [code, setCode] = useState("");
 	const map = useHTMLtoReact(code);
@@ -22,7 +22,7 @@ export default function LocationInput({ setData, data }) {
 
 	return (
 		<Fragment>
-			<div className="form-group">
+			<div className="form-group mb-3">
 				<div className="form-group-item mb-1">
 					<span>You can get your HTML code here. </span>
 					<button
@@ -32,9 +32,12 @@ export default function LocationInput({ setData, data }) {
 						Get HTML Code
 					</button>
 				</div>
-			</div>
-			<div className="form-group">
-				<input name="location" onChange={handleChange} placeholder="Paste code here." />
+				<input
+					className={inputClassName}
+					name="location"
+					onChange={handleChange}
+					placeholder="Paste code here."
+				/>
 				<button onClick={() => setCode(tag)}>
 					<span role="img" aria-label="location-pin">
 						📍

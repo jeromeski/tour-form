@@ -63,7 +63,7 @@ export default function PackageControl() {
 	};
 
 	const handleNext = (data) => {
-		if (currentIndex < 2) {
+		if (currentIndex < 1) {
 			setValues({ ...values, ...data });
 			setCurrentIndex(currentIndex + 1);
 			return;
@@ -72,18 +72,21 @@ export default function PackageControl() {
 	};
 
 	const handlePrev = () => {
-		if (currentIndex <= 2) {
+		if (currentIndex <= 1) {
 			setCurrentIndex(currentIndex - 1);
 			return;
 		}
 	};
-	console.log("Values -->", values);
 
 	return (
 		<PackageFormFlow currentIndex={currentIndex}>
-			<StepOne handleNext={handleNext} />
-			<StepTwo setValues={setValues} handlePrev={handlePrev} handleNext={handleNext} />
-			<StepThree handleSubmit={handleSubmit} handlePrev={handlePrev} />
+			<StepOne handleNext={handleNext} values={values} />
+			<StepTwo
+				setValues={setValues}
+				handlePrev={handlePrev}
+				handleNext={handleNext}
+				values={values}
+			/>
 		</PackageFormFlow>
 	);
 }

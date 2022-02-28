@@ -1,6 +1,6 @@
 import axios from "axios";
 import MockAdapter from "axios-mock-adapter";
-import categoriesJson from "../data/categories.json";
+import categoriesJson from "data/categories.json";
 
 const { categories } = categoriesJson;
 

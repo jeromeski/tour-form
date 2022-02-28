@@ -9,6 +9,7 @@
 	"main": "src/index.js",
 	"dependencies": {
 		"@ant-design/icons": "^4.7.0",
+		"@reach/alert-dialog": "^0.16.2",
 		"@reach/checkbox": "^0.16.0",
 		"@reach/combobox": "0.16.5",
 		"axios": "0.26.0",

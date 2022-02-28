@@ -14,7 +14,7 @@ import { toast } from "react-toastify";
 // import keywords from "../data/index";
 import { getKeywords } from "api/get-keywords";
 
-export default function KeywordInput({ setData, data }) {
+export default function KeywordInput({ setData, data, labelTitle }) {
 	const [term, setTerm] = useState("");
 	const [keywords, setKeywords] = useState([]);
 	const [selected, setSelected] = useState("");
@@ -44,7 +44,9 @@ export default function KeywordInput({ setData, data }) {
 	};
 
 	useEffect(() => {
-		getKeywords().then(({ data }) => setKeywords(data.keywords));
+		getKeywords().then(({ data }) => {
+			setKeywords(data.keywords);
+		});
 	}, []);
 
 	useEffect(() => {
@@ -57,10 +59,9 @@ export default function KeywordInput({ setData, data }) {
 		}
 	}, [selected]);
 
-	console.log(term);
-
 	return (
 		<Fragment>
+			<label>{labelTitle}</label>
 			<Combobox aria-label="Keywords" onSelect={handleSelect}>
 				{(props) => {
 					return (
