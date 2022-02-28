@@ -20,7 +20,6 @@ let initialState = {
 
 export default function StepTwo({ setValues, handlePrev, values }) {
 	useLogger("StepTwo -->");
-	// Ilagay sa iisang programState
 	const [programs, setPrograms] = useState({
 		programTitle: "",
 		programDescription: ""
@@ -28,8 +27,6 @@ export default function StepTwo({ setValues, handlePrev, values }) {
 
 	const [data, setData] = useState(dataCache || initialState);
 	const [showDialog, setShowDialog] = React.useState(false);
-
-	console.log(showDialog);
 
 	const handleChange = (e) => {
 		setPrograms({ ...programs, [e.target.name]: e.target.value });
