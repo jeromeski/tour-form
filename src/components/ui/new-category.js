@@ -1,6 +1,6 @@
 import React, { Fragment, useEffect, useState } from "react";
-import { getCategories } from "../api/get-categories";
-import CategoryInput from "./CategoryInput";
+import { getCategories } from "api/get-categories";
+import CategoryInput from "components/ui/category-input";
 // import "@reach/checkbox/styles.css";
 
 function NewCategory({ data, setData }) {

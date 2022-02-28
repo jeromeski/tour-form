@@ -1,9 +1,9 @@
 import { useState } from "react";
 
-import PackageFormFlow from "./PackageFormFlow";
-import StepOne from "./StepOne";
-import StepThree from "./StepThree";
-import StepTwo from "./StepTwo";
+import PackageFormFlow from "./package-form-flow";
+import StepOne from "components/package/step-one";
+import StepThree from "components/package/step-three";
+import StepTwo from "components/package/step-two";
 
 const initialState = {
 	title: "",

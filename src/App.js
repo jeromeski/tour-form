@@ -1,6 +1,6 @@
 import { Fragment } from "react";
 import { ToastContainer } from "react-toastify";
-import NewPackage from "./components/NewPackage";
+import NewPackage from "pages/new-package";
 import "react-toastify/dist/ReactToastify.css";
 // import "@reach/checkbox/styles.css";
 

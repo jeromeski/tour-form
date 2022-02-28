@@ -1,10 +1,10 @@
 import { Fragment, useEffect, useState } from "react";
 import { useLogger } from "react-use";
-import KeywordInput from "./KeywordInput";
-import DragDrop from "./DragNDrop";
-import LocationInput from "./LocationInput";
+import KeywordInput from "components/ui/keyword-input";
+import DragDrop from "components/ui/drag-drop";
+import LocationInput from "components/ui/location-input";
 import { DeleteOutlined } from "@ant-design/icons";
-import NewCategory from "./NewCategory";
+import NewCategory from "components/ui/new-category";
 
 let dataCache = null;
 let initialState = {

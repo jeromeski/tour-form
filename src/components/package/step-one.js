@@ -1,7 +1,7 @@
 import { Fragment, useEffect, useState } from "react";
 import { useLogger } from "react-use";
-import Input from "./ui/input.js";
-import TextArea from "./ui/text-area.js";
+import Input from "components/ui/input.js";
+import TextArea from "components/ui/text-area.js";
 
 let dataState = null;
 const initialState = {
@@ -33,7 +33,7 @@ export default function StepOne({ handleNext }) {
 			<div className="container p-5">
 				<div className="row">
 					<div className="col-md-6 col-lg-6 col-xl-6">
-						<fieldset className="p-5">
+						<fieldset className="p-3">
 							<div className="form-group mb-2">
 								<Input
 									type="text"
