@@ -1,43 +1,56 @@
 import React, { Fragment } from "react";
+import { capitalizeFirstLetter, getObjectValue } from "utils";
 
 const TextArea = ({
-	errorMessage,
-	labelTitle,
 	name,
-	handleChange,
 	encased = false,
 	labelClassName,
 	inputClassName,
 	placeholderNote,
-	...rest
+	handleChange,
+	handleBlur,
+	touched,
+	errors
 }) => {
 	if (encased)
 		return (
 			<label className={labelClassName} htmlFor={name}>
-				{labelTitle}
+				{capitalizeFirstLetter(name)}
 				<textarea
 					className={inputClassName}
 					name={name}
-					onChange={handleChange}
 					placeholder={placeholderNote}
-					{...rest}
+					onChange={handleChange}
+					onBlur={handleBlur}
 				/>
-				;{errorMessage && <span>{errorMessage}</span>}
+				<div className="text-danger">
+					{errors && touched[getObjectValue(touched, name)] ? (
+						<span>{errors[getObjectValue(errors, name)]}</span>
+					) : (
+						<span>&nbsp;</span>
+					)}
+				</div>
 			</label>
 		);
 	return (
 		<Fragment>
-			<label className={labelClassName} htmlFor={name}>
-				{labelTitle}
+			<label className="d-block text-muted" htmlFor={name}>
+				{capitalizeFirstLetter(name)}
 			</label>
 			<textarea
 				className={inputClassName}
 				name={name}
-				onChange={handleChange}
 				placeholder={placeholderNote}
-				{...rest}
+				onChange={handleChange}
+				onBlur={handleBlur}
 			/>
-			{errorMessage && <span>{errorMessage}</span>}
+			<div className="text-danger">
+				{errors && touched[getObjectValue(touched, name)] ? (
+					<span>{errors[getObjectValue(errors, name)]}</span>
+				) : (
+					<span>&nbsp;</span>
+				)}
+			</div>
 		</Fragment>
 	);
 };

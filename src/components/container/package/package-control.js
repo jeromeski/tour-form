@@ -79,7 +79,10 @@ export default function PackageControl() {
 
 	return (
 		<PackageFormFlow currentIndex={currentIndex}>
-			<StepOne handleNext={handleNext} values={values} />
+			<StepOne
+			// handleNext={handleNext}
+			// values={values}
+			/>
 			<StepTwo
 				setValues={setValues}
 				handlePrev={handlePrev}

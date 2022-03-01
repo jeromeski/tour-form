@@ -1,46 +1,70 @@
 import React, { Fragment } from "react";
+import { capitalizeFirstLetter, getObjectValue } from "utils";
 
 const Input = ({
-	errorMessage,
-	labelTitle,
 	type,
 	name,
+	labelTitle,
 	encased = false,
-	labelClassName,
+	removeLabel,
 	inputClassName,
+	labelClassName,
 	placeholderNote,
 	handleChange,
-	...rest
+	handleBlur,
+	touched,
+	errors
 }) => {
 	if (encased)
 		return (
-			<label className={labelClassName} htmlFor={name}>
-				{labelTitle}
+			<label className={`text-muted ${labelClassName ? labelClassName : "d-block"}`} htmlFor={name}>
+				{capitalizeFirstLetter(name)}
 				<input
 					type={type}
 					name={name}
 					className={inputClassName}
 					placeholder={placeholderNote}
 					onChange={handleChange}
-					{...rest}
+					onblur={handleBlur}
 				/>
-				;{errorMessage && <span>{errorMessage}</span>}
+				{errors && touched[getObjectValue(touched, name)] ? (
+					<span className="text-danger d-block">{errors[getObjectValue(errors, name)]}</span>
+				) : (
+					<span className="d-block">&nbsp;</span>
+				)}
 			</label>
 		);
 	return (
 		<Fragment>
-			<label htmlFor={name} className={labelClassName}>
-				{labelTitle}
-			</label>
+			{labelTitle && (
+				<label
+					htmlFor={name}
+					className={`text-muted ${labelClassName ? labelClassName : "d-block"}`}>
+					{capitalizeFirstLetter(labelTitle)}
+				</label>
+			)}
+			{!labelTitle && !removeLabel && (
+				<label
+					htmlFor={name}
+					className={`text-muted ${labelClassName ? labelClassName : "d-block"}`}>
+					{capitalizeFirstLetter(name)}
+				</label>
+			)}
+			{removeLabel && <label></label>}
 			<input
 				type={type}
 				name={name}
 				className={inputClassName}
 				placeholder={placeholderNote}
 				onChange={handleChange}
-				{...rest}
+				onBlur={handleBlur}
 			/>
-			{errorMessage && <span>{errorMessage}</span>}
+
+			{errors && touched[getObjectValue(touched, name)] ? (
+				<span className="text-danger d-block">{errors[getObjectValue(errors, name)]}</span>
+			) : (
+				<span className="d-block">&nbsp;</span>
+			)}
 		</Fragment>
 	);
 };

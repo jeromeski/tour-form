@@ -1,169 +1,189 @@
 import { Fragment, useEffect, useState } from "react";
 import { useLogger } from "react-use";
+import {useField} from "formik";
 import Input from "components/ui/input.js";
 import TextArea from "components/ui/text-area.js";
+import Select from "components/ui/select";
 
-let dataState = null;
-const initialState = {
-	title: "",
-	description: "",
-	maxCount: "",
-	days: "",
-	nights: "",
-	category: "",
-	salesPrice: "",
-	regularPrice: "",
-	discount: ""
-};
 
-export default function StepOne({ handleNext, values }) {
+const categoryOptions = [{ adult: "Adult" }, { child: "Child" }, { couple: "Couple" }];
+  
+export default function StepOne(
+  {
+	values,
+	errors,
+	touched,
+	handleChange,
+	handleBlur,
+	handleSubmit,
+  isValid,
+  dirty
+}
+) {
 	useLogger("StepOne -->");
-	const [data, setData] = useState({ ...(dataState || initialState) });
-
-	const handleChange = (e) => {
-		setData({ ...data, [e.target.name]: e.target.value });
-	};
-
-	useEffect(() => {
-		dataState = data;
-	});
-
+  const [field, meta] = useField("category")
+  const onSubmit = ({values, fields, helpers}) => {
+    // console.log(values, fields, helpers)
+    handleSubmit(values);
+  };
 	return (
-		<Fragment>
-			<div className="container p-5">
-				<div className="row">
-					<div className="col-md-6">
+		<div className="container p-5">
+			<div className="row">
+				<div className="col-md-6">
+					<form onSubmit={onSubmit}>
 						<fieldset className="p-3">
 							<div className="form-group mb-2">
 								<Input
-									type="text"
-									name="title"
-									labelTitle="Title"
-									labelClassName="d-block"
 									inputClassName="input d-block"
 									placeholderNote="Enter Title"
-									handleChange={handleChange}
 									encased={false}
-									errorMessage=""
+									name="title"
+									type="text"
+									touched={touched}
+									handleChange={handleChange}
+									handleBlur={handleBlur}
+									errors={errors}
 								/>
 							</div>
 							<div className="form-group mb-2">
 								<TextArea
-									inputClassName="text-area"
-									name="description"
-									labelTitle="Description"
-									labelClassName="text-area d-block"
 									inputClassName="text-area d-block"
 									placeholderNote="Enter Description"
-									onChange={handleChange}
 									encased={false}
-									errorMessage=""
+									name="description"
+									touched={touched}
+									handleChange={handleChange}
+									handleBlur={handleBlur}
+									errors={errors}
 								/>
 							</div>
 							<div className="form-group mb-2">
 								<Input
-									labelClassName="label d-block"
 									inputClassName="input d-block"
-									labelTitle="Group Size"
-									type="number"
-									name="maxCount"
 									placeholderNote="No of Pax"
-									onChange={handleChange}
 									encased={false}
-									errorMessage=""
-								/>
-							</div>
-							<div className="form-group mb-2">
-								<Input
-									labelClassName="label d-block"
-									inputClassName="input d-inline-block"
-									labelTitle="Trip Duration"
+									name="maxCount"
 									type="number"
-									name="days"
-									placeholderNote="No. of Days"
-									onChange={handleChange}
-									encased={false}
-									errorMessage=""
-								/>
-								<Input
-									labelClassName="label d-inline-block ml-2"
-									inputClassName="input d-inline-block"
-									labelTitle=""
-									type="number"
-									name="nights"
-									placeholderNote="No. of Nights"
-									onChange={handleChange}
-									encased={false}
-									errorMessage=""
+									touched={touched}
+									handleChange={handleChange}
+									handleBlur={handleBlur}
+									errors={errors}
 								/>
 							</div>
 							<div className="form-group mb-2">
-								<label className="label d-block">Category</label>
-								<select defaultValue="Choose One" name="category" onChange={handleChange}>
-									<option value="Choose One" disabled="disabled">
-										Choose One
-									</option>
-									<option value="Adult">Adult</option>
-									<option value="child">Child</option>
-									<option value="couple">Couple</option>
-								</select>
+								<Select name="category" touched={touched} errors={errors} />
 							</div>
 							<div className="form-group mb-2">
+								<span className="d-inline-block">
+									<Input
+										inputClassName="d-inline-block mr-1"
+										labelTitle="Trip Duration"
+										labelClassName="d-block"
+										placeholderNote="No. of Days"
+										encased={false}
+										name="days"
+										type="number"
+										touched={touched}
+										handleChange={handleChange}
+										handleBlur={handleBlur}
+										errors={errors}
+									/>
+								</span>
+								<span className="d-inline-block">
+									<Input
+										name="nights"
+										inputClassName="input d-inline-block"
+										labelClassName="d-block"
+										type="number"
+										placeholderNote="No. of Nights"
+										encased={false}
+										touched={touched}
+										handleChange={handleChange}
+										handleBlur={handleBlur}
+										errors={errors}
+										removeLabel={true}
+									/>
+								</span>
+							</div>
+							<div className="form-group ">
 								<Input
-									labelClassName="label d-block"
 									inputClassName="input d-block"
 									labelTitle="Sales Price"
 									type="number"
-									name="salesPrice"
 									placeholderNote="Enter Sales Price"
-									onChange={handleChange}
 									encased={false}
-									errorMessage=""
+									name="salesPrice"
+									touched={touched}
+									handleChange={handleChange}
+									handleBlur={handleBlur}
+									errors={errors}
 								/>
 							</div>
 							<div className="form-group mb-2">
 								<Input
-									labelClassName="label d-block"
 									inputClassName="input d-block"
 									labelTitle="Regular Price"
-									type="number"
-									name="regularPrice"
 									placeholderNote="Enter Regular Price"
-									onChange={handleChange}
 									encased={false}
-									errorMessage=""
+									name="regularPrice"
+									type="number"
+									touched={touched}
+									handleChange={handleChange}
+									handleBlur={handleBlur}
+									errors={errors}
 								/>
 							</div>
 							<div className="form-group mb-2">
 								<Input
-									labelClassName="label d-block"
 									inputClassName="input d-block"
-									labelTitle="Discount"
-									type="number"
-									name="discount"
 									placeholderNote="Enter Discount"
-									onChange={handleChange}
 									encased={false}
-									errorMessage=""
+									name="discount"
+									type="number"
+									touched={touched}
+									handleChange={handleChange}
+									handleBlur={handleBlur}
+									errors={errors}
 								/>
 							</div>
-							<button className="button mt-2" onClick={() => handleNext(data)}>
+
+							<button type="submit" className="button mt-2" disabled={!(dirty && isValid)}>
 								Next
 							</button>
 						</fieldset>
-					</div>
-					<div className="col-md-6">
-						<div className="row">
-							<div className="col-md-6">
-								<pre>{JSON.stringify(data, null, 4)}</pre>
-							</div>
-							<div className="col-md-6">
-								<pre>{JSON.stringify(values, null, 4)}</pre>
-							</div>
+					</form>
+				</div>
+				<div className="col-md-6">
+					<div className="row">
+						<div className="col-md-6">
+							<pre>{JSON.stringify(values, null, 4)}</pre>
 						</div>
 					</div>
 				</div>
 			</div>
-		</Fragment>
+		</div>
 	);
 }
+
+/*
+
+
+  <Select
+									labelClassName="select d-block text-muted"
+									labelTitle="Category"
+									name="category"
+									options={categoryOptions}
+									touched={touched}
+									handleChange={handleChange}
+									handleBlur={handleBlur}
+									errors={errors}
+                  values={values}
+								/>
+											
+											
+											
+											
+											
+											
+  
+*/ 
