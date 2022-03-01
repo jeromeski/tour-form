@@ -8,31 +8,25 @@ import Select from "components/ui/select";
 
 const categoryOptions = [{ adult: "Adult" }, { child: "Child" }, { couple: "Couple" }];
   
-export default function StepOne(
-  {
+export default function StepOne({
 	values,
 	errors,
 	touched,
 	handleChange,
 	handleBlur,
-	handleSubmit,
-  isValid,
-  dirty
-}
-) {
+	isValid,
+	dirty,
+	handleNext
+}) {
 	useLogger("StepOne -->");
-  const [field, meta] = useField("category")
-  const onSubmit = ({values, fields, helpers}) => {
-    // console.log(values, fields, helpers)
-    handleSubmit(values);
-  };
+
 	return (
 		<div className="container p-5">
 			<div className="row">
 				<div className="col-md-6">
-					<form onSubmit={onSubmit}>
-						<fieldset className="p-3">
-							<div className="form-group mb-2">
+					<form onSubmit={handleNext}>
+						<fieldset className="p-5">
+							<div className="form-group mb-1">
 								<Input
 									inputClassName="input d-block"
 									placeholderNote="Enter Title"
@@ -45,7 +39,7 @@ export default function StepOne(
 									errors={errors}
 								/>
 							</div>
-							<div className="form-group mb-2">
+							<div className="form-group mb-1">
 								<TextArea
 									inputClassName="text-area d-block"
 									placeholderNote="Enter Description"
@@ -57,7 +51,7 @@ export default function StepOne(
 									errors={errors}
 								/>
 							</div>
-							<div className="form-group mb-2">
+							<div className="form-group mb-1">
 								<Input
 									inputClassName="input d-block"
 									placeholderNote="No of Pax"
@@ -70,42 +64,45 @@ export default function StepOne(
 									errors={errors}
 								/>
 							</div>
-							<div className="form-group mb-2">
+							<div className="form-group mb-1">
 								<Select name="category" touched={touched} errors={errors} />
 							</div>
-							<div className="form-group mb-2">
-								<span className="d-inline-block">
-									<Input
-										inputClassName="d-inline-block mr-1"
-										labelTitle="Trip Duration"
-										labelClassName="d-block"
-										placeholderNote="No. of Days"
-										encased={false}
-										name="days"
-										type="number"
-										touched={touched}
-										handleChange={handleChange}
-										handleBlur={handleBlur}
-										errors={errors}
-									/>
-								</span>
-								<span className="d-inline-block">
-									<Input
-										name="nights"
-										inputClassName="input d-inline-block"
-										labelClassName="d-block"
-										type="number"
-										placeholderNote="No. of Nights"
-										encased={false}
-										touched={touched}
-										handleChange={handleChange}
-										handleBlur={handleBlur}
-										errors={errors}
-										removeLabel={true}
-									/>
-								</span>
+							<div className="form-group mb-1">
+								<div className="text-muted">Trip Duration</div>
+								<div className="row">
+									<div className="col-md-6">
+										<Input
+											inputClassName="d-inline-block mr-1"
+											labelClassName="d-block"
+											placeholderNote="No. of Days"
+											encased={false}
+											name="days"
+											type="number"
+											touched={touched}
+											handleChange={handleChange}
+											handleBlur={handleBlur}
+											errors={errors}
+											removeLabel={true}
+										/>
+									</div>
+									<div className="col-md-6">
+										<Input
+											name="nights"
+											inputClassName="input d-inline-block"
+											labelClassName="d-block"
+											type="number"
+											placeholderNote="No. of Nights"
+											encased={false}
+											touched={touched}
+											handleChange={handleChange}
+											handleBlur={handleBlur}
+											errors={errors}
+											removeLabel={true}
+										/>
+									</div>
+								</div>
 							</div>
-							<div className="form-group ">
+							<div className="form-group mb-1">
 								<Input
 									inputClassName="input d-block"
 									labelTitle="Sales Price"
@@ -119,7 +116,7 @@ export default function StepOne(
 									errors={errors}
 								/>
 							</div>
-							<div className="form-group mb-2">
+							<div className="form-group mb-1">
 								<Input
 									inputClassName="input d-block"
 									labelTitle="Regular Price"
@@ -133,7 +130,7 @@ export default function StepOne(
 									errors={errors}
 								/>
 							</div>
-							<div className="form-group mb-2">
+							<div className="form-group mb-1">
 								<Input
 									inputClassName="input d-block"
 									placeholderNote="Enter Discount"
@@ -147,7 +144,11 @@ export default function StepOne(
 								/>
 							</div>
 
-							<button type="submit" className="button mt-2" disabled={!(dirty && isValid)}>
+							<button
+								type="submit"
+								className="button mt-2"
+								// disabled={!(dirty && isValid)}
+							>
 								Next
 							</button>
 						</fieldset>

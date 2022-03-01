@@ -1,19 +1,15 @@
 import React, { useRef } from "react";
 import {
-	AlertDialog,
+	// AlertDialog,
 	AlertDialogLabel,
 	AlertDialogDescription,
 	AlertDialogOverlay,
 	AlertDialogContent
 } from "@reach/alert-dialog";
 
-const PackageAlertDialog = ({ showDialog, setShowDialog, data, setValues }) => {
+const PackageAlertDialog = ({ showDialog, setShowDialog, handleSubmit }) => {
 	const cancelRef = useRef();
 	const close = () => setShowDialog(false);
-	const handleSubmit = () => {
-		setValues((prev) => ({ ...prev, ...data }));
-		close();
-	};
 	return (
 		showDialog && (
 			<AlertDialogOverlay leastDestructiveRef={cancelRef}>
@@ -25,8 +21,8 @@ const PackageAlertDialog = ({ showDialog, setShowDialog, data, setValues }) => {
 					</AlertDialogDescription>
 
 					<div className="alert-buttons mt-5">
-						<button onClick={handleSubmit}>Yes, Submit!</button>{" "}
-						<button ref={cancelRef} onClick={close}>
+						<button onClick={() => handleSubmit()}>Yes, Submit!</button>{" "}
+						<button ref={cancelRef} onClick={() => close()}>
 							Nevermind
 						</button>
 					</div>

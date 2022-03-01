@@ -1,45 +1,11 @@
 import { useState } from "react";
-
 import PackageFormFlow from "./package-form-flow";
 import StepOne from "components/package/step-one";
 import StepTwo from "components/package/step-two";
 
-const initialState = {
-	title: "",
-	description: "",
-	maxCount: "",
-	days: "",
-	nights: "",
-	category: "",
-	salesPrice: "",
-	regularPrice: "",
-	discount: "",
-	images: [],
-	programs: [],
-	location: "",
-	categories: []
-};
-
 export default function PackageControl() {
 	// useLogger("PackageControl => ");
-	const [values, setValues] = useState(initialState);
 	const [currentIndex, setCurrentIndex] = useState(0);
-
-	const {
-		title,
-		description,
-		maxCount,
-		days,
-		nights,
-		category,
-		salesPrice,
-		regularPrice,
-		discount,
-		images,
-		programs,
-		location,
-		categories
-	} = values;
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
@@ -61,13 +27,12 @@ export default function PackageControl() {
 		console.log([...packageOffer]);
 	};
 
-	const handleNext = (data) => {
+	const handleNext = (e) => {
+		e.preventDefault();
 		if (currentIndex < 1) {
-			setValues({ ...values, ...data });
 			setCurrentIndex(currentIndex + 1);
 			return;
 		}
-		return;
 	};
 
 	const handlePrev = () => {
@@ -79,16 +44,8 @@ export default function PackageControl() {
 
 	return (
 		<PackageFormFlow currentIndex={currentIndex}>
-			<StepOne
-			// handleNext={handleNext}
-			// values={values}
-			/>
-			<StepTwo
-				setValues={setValues}
-				handlePrev={handlePrev}
-				handleNext={handleNext}
-				values={values}
-			/>
+			<StepOne handleNext={handleNext} />
+			<StepTwo handlePrev={handlePrev} handleNext={handleNext} />
 		</PackageFormFlow>
 	);
 }

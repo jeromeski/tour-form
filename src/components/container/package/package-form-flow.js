@@ -11,7 +11,11 @@ const initialState = {
 	category: "",
 	salesPrice: "",
 	regularPrice: "",
-	discount: ""
+	discount: "",
+	images: [],
+	programs: [],
+	location: "",
+	categories: []
 };
 
 export default function PackageFormFlow({ children, currentIndex }) {

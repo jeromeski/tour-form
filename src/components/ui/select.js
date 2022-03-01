@@ -8,32 +8,6 @@ const categoryOptions = [
 ];
 
 function Select({ name, labelTitle = "Category", labelClassName = "d-block text-muted" }) {
-	// const touched = (field) => (
-	// 	<select {...field}>
-	// 		<option value="" disabled>
-	// 			Choose One
-	// 		</option>
-	// 		{categoryOptions.map((category) => (
-	// 			<option key={`select:${category.key}`} value={category.value}>
-	// 				{category.value}
-	// 			</option>
-	// 		))}
-	// 	</select>
-	// );
-
-	const untouched = (field) => (
-		<select {...field} defaultValue="Choose One">
-			<option value="" disabled>
-				Choose One
-			</option>
-			{categoryOptions.map((category) => (
-				<option key={`select:${category.key}`} value={category.value}>
-					{category.value}
-				</option>
-			))}
-		</select>
-	);
-
 	return (
 		<Fragment>
 			<label htmlFor={name} className={labelClassName}>
@@ -41,16 +15,21 @@ function Select({ name, labelTitle = "Category", labelClassName = "d-block text-
 			</label>
 			<Field name={name} className="text-muted">
 				{({ field: { value = "Choose One", ...field }, form, meta }) => (
-					<select {...field} value={value}>
-						<option value="" disabled>
-							Choose One
-						</option>
-						{categoryOptions.map((category) => (
-							<option key={`select:${category.key}`} value={category.value}>
-								{category.value}
+					<Fragment>
+						<select {...field} value={value}>
+							<option value="" disabled>
+								Choose One
 							</option>
-						))}
-					</select>
+							{categoryOptions.map((category) => (
+								<option key={`select:${category.key}`} value={category.value}>
+									{category.value}
+								</option>
+							))}
+						</select>
+						<small className="text-danger d-block" style={{ height: "1rem" }}>
+							{meta.error && meta.touched ? meta.error : ""}
+						</small>
+					</Fragment>
 				)}
 			</Field>
 		</Fragment>

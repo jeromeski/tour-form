@@ -9,9 +9,7 @@ import {
 import "@reach/combobox/styles.css";
 import { useThrottle } from "react-use";
 import { matchSorter } from "match-sorter";
-// import { getCategories } from "../api/get-categories";
 import { toast } from "react-toastify";
-// import keywords from "../data/index";
 import { getKeywords } from "api/get-keywords";
 
 export default function KeywordInput({ setData, data, labelTitle }) {

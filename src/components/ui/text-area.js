@@ -44,13 +44,11 @@ const TextArea = ({
 				onChange={handleChange}
 				onBlur={handleBlur}
 			/>
-			<div className="text-danger">
-				{errors && touched[getObjectValue(touched, name)] ? (
-					<span>{errors[getObjectValue(errors, name)]}</span>
-				) : (
-					<span>&nbsp;</span>
-				)}
-			</div>
+			<small className="text-danger d-block" style={{ height: "1rem" }}>
+				{errors && touched[getObjectValue(touched, name)]
+					? errors[getObjectValue(errors, name)]
+					: ""}
+			</small>
 		</Fragment>
 	);
 };

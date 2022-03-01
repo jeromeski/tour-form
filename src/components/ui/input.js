@@ -59,12 +59,11 @@ const Input = ({
 				onChange={handleChange}
 				onBlur={handleBlur}
 			/>
-
-			{errors && touched[getObjectValue(touched, name)] ? (
-				<span className="text-danger d-block">{errors[getObjectValue(errors, name)]}</span>
-			) : (
-				<span className="d-block">&nbsp;</span>
-			)}
+			<small className="text-danger d-block" style={{ height: "1rem" }}>
+				{errors && touched[getObjectValue(touched, name)]
+					? errors[getObjectValue(errors, name)]
+					: ""}
+			</small>
 		</Fragment>
 	);
 };

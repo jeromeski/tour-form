@@ -8,29 +8,33 @@ import NewCategory from "components/ui/new-category";
 import Input from "components/ui/input";
 import TextArea from "components/ui/text-area";
 import PackageAlertDialog from "components/ui/alert-dialog";
+// import { getCategories } from "api/get-categories";
+// import { getKeywords } from "api/get-keywords";
 
-let dataCache = null;
-let initialState = {
-	images: [],
-	programs: [],
-	location: "",
-	keywords: [],
-	categories: []
-};
 
-export default function StepTwo({ setValues, handlePrev, values }) {
+
+
+export default function StepTwo({
+	values,
+	errors,
+	touched,
+	handleChange,
+	handleBlur,
+	handleSubmit,
+	isValid,
+	dirty,
+	handlePrev
+}) {
+	const [data, setData] = useState("");
 	useLogger("StepTwo -->");
+	// const [categories, setCategories] = useState([]);
+	// const [keywords, setKeywords] = useState([]);
 	const [programs, setPrograms] = useState({
 		programTitle: "",
 		programDescription: ""
 	});
 
-	const [data, setData] = useState(dataCache || initialState);
 	const [showDialog, setShowDialog] = React.useState(false);
-
-	const handleChange = (e) => {
-		setPrograms({ ...programs, [e.target.name]: e.target.value });
-	};
 
 	const resetPrograms = () => {
 		setPrograms({
@@ -55,13 +59,20 @@ export default function StepTwo({ setValues, handlePrev, values }) {
 		});
 	};
 
-	const handlePreSubmit = () => {
+	const handlePreSubmit = (e) => {
+		e.preventDefault();
 		setShowDialog(true);
 	};
 
-	useEffect(() => {
-		dataCache = data;
-	});
+
+	// useEffect(() => {
+	// 	getCategories().then(({ data }) => {
+	// 		setCategories(data.categories);
+	// 	});
+	// 	getKeywords().then(({ data }) => {
+	// 		setKeywords(data.keywords);
+	// 	});
+	// }, []);
 
 	// console.log("Programs -->", programs);
 	console.log("StepTwo DATA -->", data);
@@ -71,72 +82,71 @@ export default function StepTwo({ setValues, handlePrev, values }) {
 			<div className="container p-5">
 				<div className="row">
 					<div className="col-md-6">
-						<fieldset className="p-5">
-							<div className="form-group mb-4">
-								<DragDrop handleAddImages={handleAddImages} />
-							</div>
-							<div className="form-group mb-4">
-								<Input
-									labelTitle="Program"
-									labelClassName="label d-block"
-									inputClassName="input d-block mb-1"
-									type="text"
-									name="programTitle"
-									value={programs.programTitle}
-									placeholderNote="Enter Title"
-									onChange={handleChange}
-									errorMessage=""
-								/>
-								<TextArea
-									inputClassName="text-area d-block"
-									name="programDescription"
-									placeholderNote="Description"
-									value={programs.programDescription}
-									onChange={handleChange}
-									errorMessage=""
-								/>
-								<button className="mt-2" onClick={handleAddProgram}>
-									Add Program
-								</button>
-							</div>
-							<div className="form-group mb-4">
-								<LocationInput setData={setData} data={data} inputClassName="mr-1" />
-							</div>
-							<div className="form-group mb-4">
-								<KeywordInput setData={setData} data={data} labelTitle="Add Keywords" />
-								{data &&
-									data.keywords &&
-									data.keywords.map((keyword, idx) => {
-										return (
-											<div>
-												<span key={`${keyword[idx]}:${keyword}`}>{keyword}</span>
-												<button onClick={(e) => handleDeleteKeyword(e, keyword)}>
-													<DeleteOutlined />
-												</button>
-											</div>
-										);
-									})}
-							</div>
-							<div className="form-group">
-								<NewCategory
-									data={data}
-									setData={setData}
-									labelClassName="font-weight-bold d-block"
-								/>
-							</div>
-							<div className="mt-5">
-								<button className="mr-2" onClick={handlePrev}>
-									Back
-								</button>
-								<button onClick={handlePreSubmit}>Submit</button>
-							</div>
-						</fieldset>
+						<form onSubmit={handlePreSubmit}>
+							<fieldset className="p-5">
+								<div className="form-group mb-4">
+									<DragDrop handleAddImages={handleAddImages} />
+								</div>
+								<div className="form-group mb-4">
+									<Input
+										labelTitle="Program"
+										labelClassName="label d-block"
+										inputClassName="input d-block mb-1"
+										type="text"
+										name="programTitle"
+										value={programs.programTitle}
+										placeholderNote="Enter Title"
+										onChange={handleChange}
+										errorMessage=""
+									/>
+									<TextArea
+										inputClassName="text-area d-block"
+										name="programDescription"
+										placeholderNote="Description"
+										value={programs.programDescription}
+										onChange={handleChange}
+										errorMessage=""
+									/>
+									<button className="mt-2" onClick={handleAddProgram}>
+										Add Program
+									</button>
+								</div>
+								<div className="form-group mb-4">
+									<LocationInput setData={setData} data={data} inputClassName="mr-1" />
+								</div>
+								<div className="form-group mb-4">
+									<KeywordInput setData={setData} data={data} labelTitle="Add Keywords" />
+									{data &&
+										data.keywords &&
+										data.keywords.map((keyword, idx) => {
+											return (
+												<div>
+													<span key={`${keyword[idx]}:${keyword}`}>{keyword}</span>
+													<button onClick={(e) => handleDeleteKeyword(e, keyword)}>
+														<DeleteOutlined />
+													</button>
+												</div>
+											);
+										})}
+								</div>
+								<div className="form-group">
+									<NewCategory
+										data={data}
+										setData={setData}
+										labelClassName="font-weight-bold d-block"
+									/>
+								</div>
+								<div className="mt-5">
+									<button className="mr-2" onClick={handlePrev}>
+										Back
+									</button>
+									<button onClick={handlePreSubmit}>Submit</button>
+								</div>
+							</fieldset>
+						</form>
 					</div>
 					<div className="col-md-6">
 						<div className="row">
-							<div className="col-md-6">
-								<pre>{JSON.stringify(data, null, 4)}</pre>
-							</div>
 							<div className="col-md-6">
 								<pre>{JSON.stringify(values, null, 4)}</pre>
 							</div>
@@ -147,8 +157,8 @@ export default function StepTwo({ setValues, handlePrev, values }) {
 			<PackageAlertDialog
 				showDialog={showDialog}
 				setShowDialog={setShowDialog}
-				setValues={setValues}
-				data={data}
+				handleSubmit={handleSubmit}
+				value={values}
 			/>
 		</Fragment>
 	);
