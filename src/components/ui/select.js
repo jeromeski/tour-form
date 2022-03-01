@@ -40,8 +40,8 @@ function Select({ name, labelTitle = "Category", labelClassName = "d-block text-
 				{labelTitle}
 			</label>
 			<Field name={name} className="text-muted">
-				{({ field, form, meta }) => (
-					<select {...field} defaultValue="Choose One">
+				{({ field: { value = "Choose One", ...field }, form, meta }) => (
+					<select {...field} value={value}>
 						<option value="" disabled>
 							Choose One
 						</option>
