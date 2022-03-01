@@ -7,7 +7,7 @@ import {
 	AlertDialogContent
 } from "@reach/alert-dialog";
 
-const PackageAlertDialog = ({ showDialog, setShowDialog, handleSubmit }) => {
+const PackageAlertDialog = ({ showDialog, setShowDialog, handleSubmit, values }) => {
 	const cancelRef = useRef();
 	const close = () => setShowDialog(false);
 	return (
@@ -21,7 +21,7 @@ const PackageAlertDialog = ({ showDialog, setShowDialog, handleSubmit }) => {
 					</AlertDialogDescription>
 
 					<div className="alert-buttons mt-5">
-						<button onClick={() => handleSubmit()}>Yes, Submit!</button>{" "}
+						<button onClick={() => handleSubmit(values)}>Yes, Submit!</button>{" "}
 						<button ref={cancelRef} onClick={() => close()}>
 							Nevermind
 						</button>

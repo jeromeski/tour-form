@@ -14,5 +14,6 @@ export const validationSchema = Yup.object({
 	category: Yup.string().required("Category is required."),
 	salesPrice: Yup.number().required("Sales Price is required."),
 	regularPrice: Yup.number().required("Regular Price is required."),
-	discount: Yup.number().required("Discount is required.")
+	discount: Yup.number().required("Discount is required."),
+	images: Yup.array().required("Images is required").min(3, "At least 3 images are required")
 });

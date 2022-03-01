@@ -27,8 +27,6 @@ export default function StepTwo({
 }) {
 	const [data, setData] = useState("");
 	useLogger("StepTwo -->");
-	// const [categories, setCategories] = useState([]);
-	// const [keywords, setKeywords] = useState([]);
 	const [programs, setPrograms] = useState({
 		programTitle: "",
 		programDescription: ""
@@ -64,17 +62,6 @@ export default function StepTwo({
 		setShowDialog(true);
 	};
 
-
-	// useEffect(() => {
-	// 	getCategories().then(({ data }) => {
-	// 		setCategories(data.categories);
-	// 	});
-	// 	getKeywords().then(({ data }) => {
-	// 		setKeywords(data.keywords);
-	// 	});
-	// }, []);
-
-	// console.log("Programs -->", programs);
 	console.log("StepTwo DATA -->", data);
 
 	return (
@@ -85,9 +72,47 @@ export default function StepTwo({
 						<form onSubmit={handlePreSubmit}>
 							<fieldset className="p-5">
 								<div className="form-group mb-4">
-									<DragDrop handleAddImages={handleAddImages} />
+									<DragDrop />
 								</div>
-								<div className="form-group mb-4">
+								<div className="mt-5">
+									<button className="mr-2" onClick={handlePrev}>
+										Back
+									</button>
+									<button disabled={!(dirty && isValid)} onClick={handlePreSubmit}>Submit</button>
+								</div>
+							</fieldset>
+						</form>
+					</div>
+					<div className="col-md-6">
+						<div className="row">
+							<div className="col-md-6">
+								<pre>{JSON.stringify(values, null, 4)}</pre>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<PackageAlertDialog
+				showDialog={showDialog}
+				setShowDialog={setShowDialog}
+				handleSubmit={handleSubmit}
+				values={values}
+			/>
+		</Fragment>
+	);
+}
+
+/*
+onClick={
+  () => {
+  if (data === null) {
+    console.log(data);
+  }
+  handleNext(data);
+  }
+}
+
+<div className="form-group mb-4">
 									<Input
 										labelTitle="Program"
 										labelClassName="label d-block"
@@ -136,42 +161,5 @@ export default function StepTwo({
 										labelClassName="font-weight-bold d-block"
 									/>
 								</div>
-								<div className="mt-5">
-									<button className="mr-2" onClick={handlePrev}>
-										Back
-									</button>
-									<button onClick={handlePreSubmit}>Submit</button>
-								</div>
-							</fieldset>
-						</form>
-					</div>
-					<div className="col-md-6">
-						<div className="row">
-							<div className="col-md-6">
-								<pre>{JSON.stringify(values, null, 4)}</pre>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-			<PackageAlertDialog
-				showDialog={showDialog}
-				setShowDialog={setShowDialog}
-				handleSubmit={handleSubmit}
-				value={values}
-			/>
-		</Fragment>
-	);
-}
-
-/*
-onClick={
-  () => {
-  if (data === null) {
-    console.log(data);
-  }
-  handleNext(data);
-  }
-}
-
+								
 */
