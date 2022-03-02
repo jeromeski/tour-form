@@ -13,7 +13,9 @@ const initialState = {
 	regularPrice: "",
 	discount: "",
 	images: [],
-	programs: [],
+	programIntro: "",
+	programs: [{ title: "", description: "" }],
+
 	location: "",
 	categories: []
 };

@@ -7,7 +7,7 @@ import {
 	AlertDialogContent
 } from "@reach/alert-dialog";
 
-const PackageAlertDialog = ({ showDialog, setShowDialog, handleSubmit, values }) => {
+const AddProgramDialog = ({ showDialog, setShowDialog, handleSubmit, values }) => {
 	const cancelRef = useRef();
 	const close = () => setShowDialog(false);
 	return (
@@ -32,4 +32,4 @@ const PackageAlertDialog = ({ showDialog, setShowDialog, handleSubmit, values })
 	);
 };
 
-export default PackageAlertDialog;
+export default AddProgramDialog;

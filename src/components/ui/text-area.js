@@ -3,9 +3,11 @@ import { capitalizeFirstLetter, getObjectValue } from "utils";
 
 const TextArea = ({
 	name,
+	labelTitle,
 	encased = false,
-	labelClassName,
+	removeLabel,
 	inputClassName,
+	labelClassName,
 	placeholderNote,
 	handleChange,
 	handleBlur,
@@ -34,9 +36,21 @@ const TextArea = ({
 		);
 	return (
 		<Fragment>
-			<label className="d-block text-muted" htmlFor={name}>
-				{capitalizeFirstLetter(name)}
-			</label>
+			{labelTitle && (
+				<label
+					htmlFor={name}
+					className={`text-muted ${labelClassName ? labelClassName : "d-block"}`}>
+					{capitalizeFirstLetter(labelTitle)}
+				</label>
+			)}
+			{!labelTitle && !removeLabel && (
+				<label
+					htmlFor={name}
+					className={`text-muted ${labelClassName ? labelClassName : "d-block"}`}>
+					{capitalizeFirstLetter(name)}
+				</label>
+			)}
+			{removeLabel && <label></label>}
 			<textarea
 				className={inputClassName}
 				name={name}

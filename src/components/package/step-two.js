@@ -8,10 +8,8 @@ import NewCategory from "components/ui/new-category";
 import Input from "components/ui/input";
 import TextArea from "components/ui/text-area";
 import PackageAlertDialog from "components/ui/alert-dialog";
-// import { getCategories } from "api/get-categories";
-// import { getKeywords } from "api/get-keywords";
-
-
+import ProgramsInput from 'components/ui/programs-input';
+import TestInput from 'components/ui/test-input';
 
 
 export default function StepTwo({
@@ -23,46 +21,21 @@ export default function StepTwo({
 	handleSubmit,
 	isValid,
 	dirty,
-	handlePrev
+	handlePrev,
+  setFieldValue,
+  ...props
 }) {
-	const [data, setData] = useState("");
+  // console.log(props);
 	useLogger("StepTwo -->");
-	const [programs, setPrograms] = useState({
-		programTitle: "",
-		programDescription: ""
-	});
 
 	const [showDialog, setShowDialog] = React.useState(false);
 
-	const resetPrograms = () => {
-		setPrograms({
-			programTitle: "",
-			programDescription: ""
-		});
-	};
-
-	const handleAddProgram = () => {
-		setData((prev) => ({ ...data, programs: [...prev.programs, programs] }));
-		resetPrograms();
-	};
-
-	const handleAddImages = (files) => {
-		setData((prev) => ({ ...data, images: { ...prev.images, files } }));
-	};
-
-	const handleDeleteKeyword = (e, keyword) => {
-		setData({
-			...data,
-			keywords: data.keywords.filter((item) => item !== keyword)
-		});
-	};
 
 	const handlePreSubmit = (e) => {
 		e.preventDefault();
+    
 		setShowDialog(true);
 	};
-
-	console.log("StepTwo DATA -->", data);
 
 	return (
 		<Fragment>
@@ -71,14 +44,40 @@ export default function StepTwo({
 					<div className="col-md-6">
 						<form onSubmit={handlePreSubmit}>
 							<fieldset className="p-5">
-								<div className="form-group mb-4">
+								<div className="form-group mb-2">
 									<DragDrop />
 								</div>
+								<div className="form-group mb-3">
+									<TextArea
+										inputClassName="text-area d-block"
+										placeholderNote="Enter program introduction"
+										encased={false}
+										labelTitle="Program Intro"
+										name="programIntro"
+										touched={touched}
+										handleChange={handleChange}
+										handleBlur={handleBlur}
+										errors={errors}
+									/>
+								</div>
+								<div className="form-group mb-4">
+									<LocationInput />
+								</div>
+								<div className="form-group mb-4">
+
+										<TestInput />
+									
+								</div>
 								<div className="mt-5">
-									<button className="mr-2" onClick={handlePrev}>
+									<button className="button mr-2" onClick={handlePrev}>
 										Back
 									</button>
-									<button disabled={!(dirty && isValid)} onClick={handlePreSubmit}>Submit</button>
+									<button 
+                    className="button" 
+                    // disabled={!(dirty && isValid)} 
+                    type="submit">
+										Submit
+									</button>
 								</div>
 							</fieldset>
 						</form>
@@ -126,9 +125,9 @@ onClick={
 									/>
 									<TextArea
 										inputClassName="text-area d-block"
-										name="programDescription"
-										placeholderNote="Description"
-										value={programs.programDescription}
+										name="programContent"
+										placeholderNote="Content"
+										value={programs.programContent}
 										onChange={handleChange}
 										errorMessage=""
 									/>
