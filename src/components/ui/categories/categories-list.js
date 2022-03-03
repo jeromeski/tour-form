@@ -1,15 +1,7 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useEffect } from "react";
 import CategoryCheckbox from "./categories-checkbox";
 
-function CategoryList({
-	categories,
-	form,
-	field,
-	meta,
-	labelClassName,
-	handleCheckedCategories,
-	onCheckboxChange
-}) {
+function CategoryList({ categories, labelClassName, handleCheckedCategories, onCheckboxChange }) {
 	return (
 		<Fragment>
 			<label className={labelClassName}>Category</label>

@@ -58,7 +58,6 @@ export default function KeywordInput({ name, labelTitle }) {
 			<label className="text-muted">{labelTitle}</label>
 			<Field name={name}>
 				{({ form, field, meta }) => {
-					console.log("form :", form, "field :", field, "meta :", meta);
 					const handleSelect = (selectedKeyword) => {
 						form.setFieldValue(field.name, [...field.value, selectedKeyword]);
 						form.setFieldTouched(field.name, false);

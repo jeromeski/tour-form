@@ -4294,12 +4294,10 @@ body {
 [data-reach-dialog-content] {
     padding-top: 40px;
     position: relative;
-}
-
-[data-reach-dialog-content] {
     background: #fff;
     margin: 10vh auto;
     outline: none;
     padding: 2rem;
     width: 25vw;
 }
+

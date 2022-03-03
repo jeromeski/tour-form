@@ -25,5 +25,6 @@ export const validationSchema = Yup.object({
 			// .min(160, "At least 160 characters required")
 		})
 	),
-	keywords: Yup.array().min(1, "You need to have at least one keyword.")
+	keywords: Yup.array().min(1, "You need to have at least one keyword."),
+	categories: Yup.array().min(1, "You need to select at least one category.")
 });
