@@ -15,9 +15,9 @@ const initialState = {
 	images: [],
 	programIntro: "",
 	programs: [{ title: "", description: "" }],
-
 	location: "",
-	categories: []
+	categories: [],
+	keywords: []
 };
 
 export default function PackageFormFlow({ children, currentIndex }) {

@@ -1,9 +1,9 @@
 import React, { Fragment, useEffect, useState } from "react";
-import { getCategories } from "api/get-categories";
-import CategoryInput from "components/ui/category-input";
+import { getCategories } from "api/index";
+// import CategoryInput from "components/ui/category-checkbox";
 // import "@reach/checkbox/styles.css";
 
-function NewCategory({ data, setData, labelClassName }) {
+function CategoryList({ data, setData, labelClassName }) {
 	const [categories, setCategories] = useState();
 	const [categoriesChecked, setCategoriesChecked] = useState([]);
 	const handleChange = (e) => {
@@ -34,7 +34,7 @@ function NewCategory({ data, setData, labelClassName }) {
 			{categories ? (
 				categories.map((category) => (
 					<div key={`${category.name}:${category.id}`}>
-						<CategoryInput {...category} handleChange={handleChange} value={category} />
+						<CustomCheckbox />
 					</div>
 				))
 			) : (
@@ -47,4 +47,8 @@ function NewCategory({ data, setData, labelClassName }) {
 	);
 }
 
-export default NewCategory;
+export default CategoryList;
+
+/*
+<CategoryInput {...category} handleChange={handleChange} value={category} />
+*/

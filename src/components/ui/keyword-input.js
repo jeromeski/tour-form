@@ -9,10 +9,10 @@ import {
 import "@reach/combobox/styles.css";
 import { useThrottle } from "react-use";
 import { matchSorter } from "match-sorter";
-import { toast } from "react-toastify";
-import { getKeywords } from "api/get-keywords";
+import { getKeywords } from "api/index.js";
+import { Field } from "formik";
 
-export default function KeywordInput({ setData, data, labelTitle }) {
+export default function KeywordInput({ name, labelTitle }) {
 	const [term, setTerm] = useState("");
 	const [keywords, setKeywords] = useState([]);
 	const [selected, setSelected] = useState("");
@@ -33,18 +33,14 @@ export default function KeywordInput({ setData, data, labelTitle }) {
 	const handleChange = (event) => setTerm(event.target.value);
 	const results = useKeywordMatch(term);
 
-	const handleSelect = (item) => {
-		setSelected(item);
-		setData((prev) => ({
-			...data,
-			keywords: [...prev.keywords, item]
-		}));
-	};
-
 	useEffect(() => {
-		getKeywords().then(({ data }) => {
-			setKeywords(data.keywords);
-		});
+		const timer = setTimeout(() => {
+			getKeywords().then(({ data }) => {
+				const { keywords } = data;
+				setKeywords(keywords);
+			});
+			clearTimeout(timer);
+		}, [3000]);
 	}, []);
 
 	useEffect(() => {
@@ -59,35 +55,48 @@ export default function KeywordInput({ setData, data, labelTitle }) {
 
 	return (
 		<Fragment>
-			<label>{labelTitle}</label>
-			<Combobox aria-label="Keywords" onSelect={handleSelect}>
-				{(props) => {
+			<label className="text-muted">{labelTitle}</label>
+			<Field name={name}>
+				{({ form, field, meta }) => {
+					console.log("form :", form, "field :", field, "meta :", meta);
+					const handleSelect = (selectedKeyword) => {
+						form.setFieldValue(field.name, [...field.value, selectedKeyword]);
+						form.setFieldTouched(field.name, false);
+					};
 					return (
 						<Fragment>
-							<ComboboxInput
-								className="keywords-search-input"
-								onChange={handleChange}
-								value={term}
-								autocomplete
-								placeholder="Keywords"
-							/>
-							{results && (
-								<ComboboxPopover className="shadow-popup">
-									{results.length > 0 ? (
-										<ComboboxList>
-											{results.slice(0, 10).map((result, index) => (
-												<ComboboxOption key={index} value={`${result.name}`} />
-											))}
-										</ComboboxList>
-									) : (
-										<span style={{ display: "block", margin: 8 }}>No results found</span>
-									)}
-								</ComboboxPopover>
-							)}
+							<Combobox aria-label="Keywords" onSelect={handleSelect} {...field}>
+								<ComboboxInput
+									className="keywords-search-input"
+									onChange={handleChange}
+									value={term}
+									autocomplete
+									placeholder="Keywords"
+									onBlur={() => {
+										form.setFieldTouched(field.name, true);
+									}}
+								/>
+								{results && (
+									<ComboboxPopover className="shadow-popup">
+										{results.length > 0 ? (
+											<ComboboxList>
+												{results.slice(0, 10).map((result, index) => (
+													<ComboboxOption key={index} value={`${result.name}`} />
+												))}
+											</ComboboxList>
+										) : (
+											<span style={{ display: "block", margin: 8 }}>No results found</span>
+										)}
+									</ComboboxPopover>
+								)}
+							</Combobox>
+							<small className="text-danger d-block" style={{ height: "1rem" }}>
+								{meta.error && meta.touched ? meta.error : ""}
+							</small>
 						</Fragment>
 					);
 				}}
-			</Combobox>
+			</Field>
 		</Fragment>
 	);
 }

@@ -4,13 +4,12 @@ import KeywordInput from "components/ui/keyword-input";
 import DragDrop from "components/ui/drag-drop";
 import LocationInput from "components/ui/location-input";
 import { DeleteOutlined } from "@ant-design/icons";
-import NewCategory from "components/ui/new-category";
 import Input from "components/ui/input";
 import TextArea from "components/ui/text-area";
 import PackageAlertDialog from "components/ui/alert-dialog";
-import ProgramsInput from 'components/ui/programs-input';
-import TestInput from 'components/ui/test-input';
-
+import ProgramsInput from "components/ui/programs-input";
+import TestInput from "components/ui/test-input";
+import CategoriesContainer from "components/ui/categories/categories-container";
 
 export default function StepTwo({
 	values,
@@ -22,18 +21,17 @@ export default function StepTwo({
 	isValid,
 	dirty,
 	handlePrev,
-  setFieldValue,
-  ...props
+	setFieldValue,
+	...props
 }) {
-  // console.log(props);
+	// console.log(props);
 	useLogger("StepTwo -->");
 
 	const [showDialog, setShowDialog] = React.useState(false);
 
-
 	const handlePreSubmit = (e) => {
 		e.preventDefault();
-    
+
 		setShowDialog(true);
 	};
 
@@ -47,7 +45,7 @@ export default function StepTwo({
 								<div className="form-group mb-2">
 									<DragDrop />
 								</div>
-								<div className="form-group mb-3">
+								<div className="form-group mb-2">
 									<TextArea
 										inputClassName="text-area d-block"
 										placeholderNote="Enter program introduction"
@@ -60,22 +58,30 @@ export default function StepTwo({
 										errors={errors}
 									/>
 								</div>
-								<div className="form-group mb-4">
+								<div className="form-group mb-2">
 									<LocationInput />
 								</div>
-								<div className="form-group mb-4">
-
-										<TestInput />
-									
+								<div className="form-group mb-3">
+									<TestInput name="programs" />
 								</div>
+								<div className="form-group mb-2">
+									<KeywordInput name="keywords" labelTitle="Keywords" />
+								</div>
+								<div className="form-group mb-2">
+									<CategoriesContainer
+										name="categories"
+										labelClassName="d-block font-weight-bold mb-1"
+									/>
+								</div>
+
 								<div className="mt-5">
 									<button className="button mr-2" onClick={handlePrev}>
 										Back
 									</button>
-									<button 
-                    className="button" 
-                    // disabled={!(dirty && isValid)} 
-                    type="submit">
+									<button
+										className="button"
+										// disabled={!(dirty && isValid)}
+										type="submit">
 										Submit
 									</button>
 								</div>

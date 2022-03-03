@@ -1,7 +1,7 @@
 import { CustomCheckbox } from "@reach/checkbox";
 import { useToggle } from "react-use";
 
-export default function CategoryInput({ name, handleChange, ...props }) {
+export default function CategoryCheckbox({ name, handleChange, ...props }) {
 	const [checked, toggle] = useToggle(false);
 
 	const handleCheck = (e) => {
